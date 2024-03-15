@@ -303,9 +303,9 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
         scanf("%lld", &datumm);
 
         if (c == 1) {
-            //ak chcem pridat na zaciatok tak pouzivam toto
+            //If we want to add to the top of thi linked list
             NODE* newnode = /*(NODE*)*/malloc(sizeof(NODE*));
-            //naplni sa mi list
+            //we fill the list
             tmp = *headd;
             newnode->ID = IDd;
             strcpy(newnode->meno, menoo);
@@ -316,14 +316,14 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
             newnode->datum = datumm;
 
             *headd = newnode;
-            //prelinkujem list
+            //we relink the list
             newnode->next = tmp;
             l++;
 
             printf("podarilo sa pridat zaznam");
-        }
+        }//when we want to add to the middle
         else if (c > 1 && c < *zaznam) {
-            //naplnime new node
+            //fill the list
             NODE* temp;
             NODE* newnode = (NODE*)malloc(sizeof(NODE*));
             newnode->ID = IDd;
@@ -339,8 +339,8 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
 
 
 
-            // vratime sa na pozicio  n -1 v linked list  aby sme napojili novy node aby ukayoval na n+1 . obidva bdudu ukazovat na ten iste node.
-            //a vlastne teraz ten node n -1 spojime s new node a teray novy node bude pointovat na ten n+1 node
+            // we will go back to the pssition n -1 and so we can link the new list so it points to the n+1 list there are now 2 connecction to n+1 list
+            //now we will conecct n-1 list to new list n and delete the link to n+1
 
             // to sa vraciam na poyiciu n-1
             for (i = 2; i <= c - 1; i++)
@@ -353,10 +353,10 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
 
             if (temp != NULL)
             {
-                // tuto linkujem new na ten n+1
+                // linkin to n+1
                 newnode->next = temp->next;
 
-                //a tuto linkujem ten n-1 na ten novy node
+                //n-1 to new link
                 temp->next = newnode;
                 l++;
                 printf("zaznam bol pridany\n");
@@ -366,7 +366,7 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
                 printf("nepodarilo sa pridat zaznam\n");
             }
         }
-            // *****************************************************ked sa ma pridat na koniec************************************
+            // when we want to add to the end
         else if (c >= *zaznam) {
             NODE* last = *headd;
             NODE* temp;
@@ -378,9 +378,9 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
             newnode->hodnota = hodnotaa;
             strcpy(newnode->casmerania, casmeraniaa);
             newnode->datum = datumm;
-            //kedze bude posledne musi byt null
+            //cuz it is the last in linked list it will point to null
             newnode->next = NULL;
-            // pojdme az na posledny node
+            // go to the last list /node
             temp = head;
             while (temp != NULL && temp->next != NULL)
                 temp = temp->next;
@@ -409,14 +409,18 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
 
 
 
-
+/*
+ *
+ * When we want ot find by measurement mode
+ *
+ * */
 void funkcia_h(NODE* head,int*na) {
     char md[300];
     int cislo = 0, c = 0;
     if (*na == 1) {
         printf("Zadaj meraci modul format: N11 Pismeno a 2 cisla");
         scanf("%s", &md);
-        while (head != NULL) {// na to aby sme presli celzm linked listom a hladmame rovnake memod ak mame rovnake tak sa nam vypise
+        while (head != NULL) {//going thriugh the whole Linked list when we find the meas mode print the lsit
             if (md[0] == head->mermod[0] && md[1] == head->mermod[1] && md[2] == head->mermod[2]) {
                 cislo++;
                 printf("%d\n", cislo);
@@ -442,7 +446,12 @@ void funkcia_h(NODE* head,int*na) {
 }
 
 
-void funkcia_r(NODE*head,int * zaznam,int*na) {
+/*
+ *
+ * swaping possitions in Linked lst
+ *
+ * */
+ int funkcia_r(NODE*head,int * zaznam,int*na) {
     NODE* tmp=head;
     NODE* tmp1=head;
     NODE* prev1;
@@ -452,41 +461,41 @@ void funkcia_r(NODE*head,int * zaznam,int*na) {
     char p;
     if (*na != 1) {
         printf("nebola spustena funkcia n\n");
-        //return 1;
+        return 1;
     }
     scanf("%d", &pos1);
 
     scanf("%d", &pos2);
     int i;
     if (pos1 <= *zaznam && pos2 <= *zaznam) {
-        // ziskam najvyialenejsie poyicie medyi nimi
+        // which pos is the biggest
         const int maxPos = (pos1 > pos2) ? pos1 : pos2;
 
-        // yistim kolko tma je zaznamov
+        // getting info how many lists are ther
         const int totalNodes = *zaznam;
 
-        // yabeypecim si aby som mal spravne poyicie aby neboli mimo listu
+        // looking if the possitions are within the Linked list
         if ((pos1 <= 0 || pos1 > totalNodes) || (pos2 <= 0 || pos2 > totalNodes))
         {
-            //return -1;
+            return -1;
         }
 
-        // ak su rovnake pozicie tak netreba menit
+        // if positions are the same we dont need to change
         if (pos1 == pos2)
         {
-            //return 1;
+            return 1;
         }
 
 
-        // zistim si ktore zaznami mam vzmenit
+        // finding which list i need to swap
         i = 1;
         temp = head;
         prev1 = NULL;
         prev2 = NULL;
 
-        //najdem si dane zaznam a maximalne mozeme to robit po max pos
+        //iterater throug linked list until Max pos
         while (temp != NULL && (i <= maxPos))
-            //ked sa loop skonci mame linky ktore mozme swapovat
+            //when loop  ends we have link we want ot swa[
         {
             if (i == pos1 - 1)
                 prev1 = temp;
@@ -497,29 +506,28 @@ void funkcia_r(NODE*head,int * zaznam,int*na) {
                 prev2 = temp;
             if (i == pos2)
                 tmp1 = temp;
-            //posun k dalsiemu elementu
+            //move to next list
             temp = temp->next;
             i++;
         }
-        //overenie ci mame linky ktore chceme swapovat
-        // Ak najdem oboje na vymenenie tak idem linkovat(npr vymiename 2 a 4)
+        //checking if we have the links we want to swap
         //
         if (tmp != NULL && tmp1 != NULL)
-        {//swapujeme next linky  podla node1->.next=node2->next a naopak
-            // linknem predchadzajuci pred(node1) s node2
+        {//swaping next links by node1->.next=node2->next a reversed
+            // linking previous to next
             if (prev1 != NULL)
                 prev1->next = tmp1;
 
-            // inknem predchadzajuci pred(node2) s node1 (node 1 a node 2 su node2 a node4 pozicie)
+            // linking prweius (node2) s node1 (node 1 a node 2 su node2 a node4 pozicie)
             if (prev2 != NULL)
                 prev2->next = tmp;
 
-            // vymenim node 1 a node2 tak ye ich next link vzmenim
             temp = tmp->next;
             tmp->next = tmp1->next;
             tmp1->next = temp;
 
-            // ak menim prvy node tak musim menit head este
+            //
+            // we are changing the 1st List we need to change the head
             if (prev1 == NULL)
                 head = tmp1;
             else if (prev2 == NULL)
@@ -531,13 +539,26 @@ void funkcia_r(NODE*head,int * zaznam,int*na) {
 }
 
 
+
+/*
+ *
+ * After data anlys is complite print thit to the csv file
+ *
+ * */
+
 void funkcia_e(NODE* head, int* na, int* zaznam){
 
+    // opening the csv file in a mode a+ which allows us to print there
+    //csv files are formatted  wiht , and \n
+    //, is new row
+    //\n is new collum
 
     FILE* fp = fopen("dataloger.csv","a+");
+    // if we can open the fiwl
     if(!fp){
         printf("cant open file");
     }
+    //for prinith the first row and fiiled it out with
     fprintf(fp,"ID,Meno,MerMod,TypMerVel,Hodnota,CasMerania,Datum\n");
 
 
@@ -545,11 +566,11 @@ void funkcia_e(NODE* head, int* na, int* zaznam){
     int index = 0;
      NODE* curr = head;
      while(curr!= NULL) {
-
+//we print list to the file
 
 
          fprintf(fp,"%lld,%s,%s,%s,%lf,%s,%lld\n",curr->ID,curr->meno,curr->mermod,curr->typmervel,curr->hodnota,curr->casmerania,curr->datum);
-
+//move to next list
          index++;
          curr=curr->next;
 
