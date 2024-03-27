@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
-#include "csv.h"
+
 
 
 
@@ -75,9 +74,9 @@ void funkcia_n(NODE** head, int* na, int* zaznam, NODE* headd) {
         }
     }
     else {
-        printf("zaznamy neboli nacitane");
+        printf("Node wasn't Logged");
     }
-    //ve need to reverse the lsit
+    //we need to reverse the lsit
 
 
     struct Node* newhead = NULL;//head of the reversed list becouse it is saved backwords
@@ -94,7 +93,7 @@ void funkcia_n(NODE** head, int* na, int* zaznam, NODE* headd) {
 
     *head = newhead;
     *zaznam = k;
-    printf("Nacitalo sa %d zaznamov\n", *zaznam);
+    printf("%d Measurement's were found  \n", *zaznam);
 
 
 
@@ -114,13 +113,13 @@ void funkcia_v(NODE* head, int* na, int* zaznam) {
         while (head != NULL) {
             cislo++;
             printf("%d:\n", cislo);
-            printf("ID cislo mer. osoby: %lld\n", head->ID);
-            printf("Meno osoby: %s\n", head->meno);
-            printf("Mer. modul: %s\n", head->mermod);
-            printf("Typ mer. veliciny: %s\n", head->typmervel);
-            printf("Hodnota: %lf\n", head->hodnota);
-            printf("Cas merania: %s\n", head->casmerania);
-            printf("Datum: %lld\n", head->datum);
+            printf("ID of measurement %lld\n", head->ID);
+            printf("Name of the person: %s\n", head->meno);
+            printf("Measurement Model: %s\n", head->mermod);
+            printf("Type of measured data: %s\n", head->typmervel);
+            printf("Value: %lf\n", head->hodnota);
+            printf("Time of measurement: %s\n", head->casmerania);
+            printf("Date of measurement: %lld\n", head->datum);
 
             printf("\n");
             head = head->next;
@@ -130,7 +129,7 @@ void funkcia_v(NODE* head, int* na, int* zaznam) {
         printf("\n");
     }
     else {
-        printf("nobola spostena funkcia n\n");
+        printf("Function n didn't ran\n");
     }
     *zaznam = cislo;
 
@@ -152,12 +151,12 @@ void funkcia_z(NODE* head, NODE** headd, int* zaznam,int*na) {
     int po = 0;
     int k = *zaznam;
     if (*na == 1) {
-        printf("Zadajte ID zaznamu na vymazanie\n");
+        printf("ID of person to delete the measurement \n");
         scanf("%lld", &IDD);
-        //***********************************pisem toto ako madar vsetko to prezera celz linked list nie iba jedno ***************(ked bude preyentovat abz som to nepomotal)*************
+
         while (head != NULL) {
             if (IDD == head->ID) {
-                printf("Zaznam pre ID: %lld pre modul %s bol vymayany.\n", head->ID, head->mermod);
+                printf("Node for ID: %lld for measurement model %s was deleted.\n", head->ID, head->mermod);
             }
             head = head->next;
         }
@@ -188,7 +187,7 @@ void funkcia_z(NODE* head, NODE** headd, int* zaznam,int*na) {
                         temp = current->next;
 
                         current->next = current->next->next;
-                        //a vymaze sa
+
                         k--;
                         free(temp);
                         break;
@@ -205,7 +204,7 @@ void funkcia_z(NODE* head, NODE** headd, int* zaznam,int*na) {
         *zaznam = k;
     }
     else {
-        printf("nebola spustena funkcia n\n");
+        printf("Function n didn't ran\n");
     }
 }
 
@@ -232,7 +231,7 @@ void funkcia_u(struct Node** head, int* na,int * zaznam) {
     }
     else {
         for (a = 0; a >= i; a++) {
-            while (current != NULL) {// spustime loop next node current v indexe
+            while (current != NULL) {
 
                 index = current->next;
 
@@ -290,10 +289,10 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
     long long datumm;
     NODE* tmp;
     if (*na == 1) {
-        printf("zadajte poziciu\n");
+        printf("Input position in a list\n");
         scanf("%s", &p);
         scanf("%d", &c);
-        printf("zadajte udaje\n");
+        printf("Type the data\n");
         scanf("%lld", &IDd);
         scanf(" %[^\n]s", &menoo);
         scanf("%s", &mermodd);
@@ -320,7 +319,7 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
             newnode->next = tmp;
             l++;
 
-            printf("podarilo sa pridat zaznam");
+            printf("Node was added");
         }//when we want to add to the middle
         else if (c > 1 && c < *zaznam) {
             //fill the list
@@ -359,11 +358,11 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
                 //n-1 to new link
                 temp->next = newnode;
                 l++;
-                printf("zaznam bol pridany\n");
+                printf("Node was added\n");
             }
             else
             {
-                printf("nepodarilo sa pridat zaznam\n");
+                printf("Node \n");
             }
         }
             // when we want to add to the end
@@ -387,14 +386,14 @@ void funkcia_p(NODE** headd, NODE* head, int* na, int* zaznam) {
 
             temp->next = newnode;
             l++;
-            printf("zaznam bol pridany\n");
+            printf("Node was added\n");
 
         }
 
 
     }
     else {
-        printf("nebolo spustena funkcia n");
+        printf("Function n didn't run");
     }
     i = 0;
     i = *zaznam + l;
@@ -418,30 +417,30 @@ void funkcia_h(NODE* head,int*na) {
     char md[300];
     int cislo = 0, c = 0;
     if (*na == 1) {
-        printf("Zadaj meraci modul format: N11 Pismeno a 2 cisla");
+        printf("Input measurement model: ");
         scanf("%s", &md);
         while (head != NULL) {//going thriugh the whole Linked list when we find the meas mode print the lsit
             if (md[0] == head->mermod[0] && md[1] == head->mermod[1] && md[2] == head->mermod[2]) {
                 cislo++;
                 printf("%d\n", cislo);
-                printf("ID cislo mer. osoby: %lld\n", head->ID);
-                printf("Meno osoby: %s\n", head->meno);
-                printf("Mer. modul: %s\n", head->mermod);
-                printf("Typ mer. veliciny: %s\n", head->typmervel);
-                printf("Hodnota: %lf\n", head->hodnota);
-                printf("Cas merania: %s\n", head->casmerania);
-                printf("Datum: %lld\n", head->datum);
+                printf("ID of measurement: %lld\n", head->ID);
+                printf("MName of person: %s\n", head->meno);
+                printf("Measurement model: %s\n", head->mermod);
+                printf("Type of value: %s\n", head->typmervel);
+                printf("Value: %lf\n", head->hodnota);
+                printf("Time of measurement: %s\n", head->casmerania);
+                printf("Date: %lld\n", head->datum);
                 printf("\n");
                 c++;
             }
             head = head->next;
         }
         if (c == 0) {
-            printf("Pre meraci modul %s niesu zaznamy\n", md);
+            printf("For measurement model %s there aren't any values\n", md);
         }
     }
     else {
-        printf("nebola spustena funkcia n\n");
+        printf("Function n didn't run\n");
     }
 }
 
@@ -460,7 +459,7 @@ void funkcia_h(NODE* head,int*na) {
     int pos1,pos2;
     char p;
     if (*na != 1) {
-        printf("nebola spustena funkcia n\n");
+        printf("Function n didn't run\n");
         return 1;
     }
     scanf("%d", &pos1);
